@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/Text.SelectedMonth"
+        android:id="@+id/textMonth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        tools:text="January 2020" />
+
+    <include layout="@layout/include_days_of_week" />
+
+    <GridView
+        android:id="@+id/gridMonthDays"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="7" />
+</LinearLayout>
