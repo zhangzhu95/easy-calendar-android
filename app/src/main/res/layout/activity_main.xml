@@ -5,9 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <fragment
-        android:id="@+id/fragmentDates"
-        android:name="io.waazaki.easycalendar.ui.fragments.DatePagerFragment"
+    <io.waazaki.easycalendar.widget.EasyCalendarView
+        android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

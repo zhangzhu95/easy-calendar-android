@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import io.waazaki.easycalendar.events.IDateClickedListener
 import io.waazaki.easycalendar.models.DateMarker
 import io.waazaki.easycalendar.models.DateObject
-import io.waazaki.easycalendar.ui.fragments.DatePagerFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), IDateClickedListener {
@@ -15,7 +14,6 @@ class MainActivity : AppCompatActivity(), IDateClickedListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val calendarView: DatePagerFragment = fragmentDates as DatePagerFragment
         calendarView.onDateChanged = this
         calendarView.setupPager()
         calendarView.markDate(

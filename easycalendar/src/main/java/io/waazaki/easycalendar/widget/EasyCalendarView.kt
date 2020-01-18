@@ -1,38 +1,34 @@
-package io.waazaki.easycalendar.ui.fragments
+package io.waazaki.easycalendar.widget
 
-import android.os.Bundle
+import android.content.Context
+import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import android.widget.FrameLayout
 import io.waazaki.easycalendar.R
 import io.waazaki.easycalendar.events.IDateClickedListener
 import io.waazaki.easycalendar.events.IMarkers
 import io.waazaki.easycalendar.models.DateMarker
 import io.waazaki.easycalendar.ui.adapters.MonthsAdapter
 import io.waazaki.easycalendar.utils.CalendarBuilder
-import kotlinx.android.synthetic.main.fragment_date_pager.*
+import kotlinx.android.synthetic.main.widget_easy_calendar.view.*
 import kotlin.math.max
 import kotlin.math.min
 
-class DatePagerFragment : Fragment(), IMarkers {
+class EasyCalendarView @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
+) : FrameLayout(context, attrs, defStyleAttr), IMarkers {
+    private var view: View =
+        LayoutInflater.from(context).inflate(R.layout.widget_easy_calendar, this, true)
 
     private val calendarBuilder = CalendarBuilder()
     private lateinit var adapter: MonthsAdapter
     lateinit var onDateChanged: IDateClickedListener
     private var markers = arrayListOf<DateMarker>()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_date_pager, container, false)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    init {
         initListeners()
     }
 
@@ -51,7 +47,7 @@ class DatePagerFragment : Fragment(), IMarkers {
         calendarBuilder.buildCalendar()
 
         adapter = MonthsAdapter(
-            context!!,
+            context,
             listMonthObjects = calendarBuilder.listMonthObjects,
             onDateClickListener = onDateChanged,
             markers = this
@@ -70,6 +66,11 @@ class DatePagerFragment : Fragment(), IMarkers {
 
     fun markDate(dateMarker: DateMarker) {
         markers.add(dateMarker)
+        adapter.notifyDataSetChanged()
+    }
+
+    fun markAllDates(dateMarker: ArrayList<DateMarker>) {
+        markers.addAll(dateMarker)
         adapter.notifyDataSetChanged()
     }
 
