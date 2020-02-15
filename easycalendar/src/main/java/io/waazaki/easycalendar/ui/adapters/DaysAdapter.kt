@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import io.waazaki.easycalendar.R
 import io.waazaki.easycalendar.events.IMarkers
 import io.waazaki.easycalendar.models.DateMarker
@@ -32,9 +33,11 @@ class DaysAdapter(
         textDate.setBackgroundResource(R.drawable.marker_bg)
         val drawable = textDate.background as GradientDrawable
         if (marker != null) {
-            textDate.setTextColor(context.resources.getColor(marker.textColor))
-            drawable.setColor(context.resources.getColor(marker.markColor))
+            // Change Specific date style
+            textDate.setTextColor(ContextCompat.getColor(context, marker.textColor))
+            drawable.setColor(ContextCompat.getColor(context, marker.markColor))
         } else {
+            // Change Today's date style
             textDate.setTextColor(getDateColor(dateObject))
             drawable.setColor(Color.TRANSPARENT)
         }
@@ -55,9 +58,9 @@ class DaysAdapter(
 
     private fun getDateColor(dateObject: DateObject): Int {
         return when {
-            isToday(dateObject) -> context.resources.getColor(R.color.electricBlue)
-            isPriorDate(dateObject) -> context.resources.getColor(R.color.whiteTransparent)
-            else -> context.resources.getColor(R.color.white)
+            isToday(dateObject) -> ContextCompat.getColor(context, R.color.electricBlue)
+            isPriorDate(dateObject) -> ContextCompat.getColor(context, R.color.whiteTransparent)
+            else -> ContextCompat.getColor(context, R.color.white)
         }
     }
 
