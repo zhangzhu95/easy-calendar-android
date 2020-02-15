@@ -36,8 +36,11 @@ class DaysAdapter(
             // Change Specific date style
             textDate.setTextColor(ContextCompat.getColor(context, marker.textColor))
             drawable.setColor(ContextCompat.getColor(context, marker.markColor))
-        } else {
+        } else if (isToday(dateObject)) {
             // Change Today's date style
+            textDate.setTextColor(ContextCompat.getColor(context, R.color.black))
+            drawable.setColor(Color.WHITE)
+        } else {
             textDate.setTextColor(getDateColor(dateObject))
             drawable.setColor(Color.TRANSPARENT)
         }
@@ -58,7 +61,6 @@ class DaysAdapter(
 
     private fun getDateColor(dateObject: DateObject): Int {
         return when {
-            isToday(dateObject) -> ContextCompat.getColor(context, R.color.electricBlue)
             isPriorDate(dateObject) -> ContextCompat.getColor(context, R.color.whiteTransparent)
             else -> ContextCompat.getColor(context, R.color.white)
         }
