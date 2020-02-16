@@ -18,9 +18,14 @@ import io.waazaki.easycalendar.utils.DateUtils.isToday
 
 class DaysAdapter(
     private var context: Context,
-    private var dateObjects: List<DateObject>,
     private var markers: IMarkers?
 ) : BaseAdapter() {
+
+    var dateObjects: List<DateObject> = emptyList()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun getView(position: Int, p1: View?, p2: ViewGroup?): View {
 

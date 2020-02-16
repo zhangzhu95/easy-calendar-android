@@ -44,14 +44,22 @@ class MonthsAdapter(
 
     class MonthsHolder constructor(
         itemView: View,
-        var context: Context,
-        var onDateClickListener: IDateClickedListener?,
-        var markers: IMarkers?
+        context: Context,
+        private var onDateClickListener: IDateClickedListener?,
+        markers: IMarkers?
     ) :
         RecyclerView.ViewHolder(itemView) {
 
         private var textMonth: TextView = itemView.findViewById(R.id.textMonth)
         private var gridMonthDays: GridView = itemView.findViewById(R.id.gridMonthDays)
+        private val adapter = DaysAdapter(
+            context,
+            markers = markers
+        )
+
+        init {
+            gridMonthDays.adapter = adapter
+        }
 
         fun bind(monthObject: MonthObject) {
 
@@ -59,13 +67,9 @@ class MonthsAdapter(
                 CalendarBuilder.getMonthName(monthObject.month).orEmpty() + " " + monthObject.year
             textMonth.text = text.toUpperCase(Locale.US)
 
-            // Setup the grid
-            gridMonthDays.adapter =
-                DaysAdapter(
-                    context,
-                    monthObject.listOfDates,
-                    markers
-                )
+            // Update the list of dates
+            adapter.dateObjects = monthObject.listOfDates
+            gridMonthDays.requestLayout()
 
             gridMonthDays.onItemClickListener =
                 AdapterView.OnItemClickListener { _, _, index, _ ->
